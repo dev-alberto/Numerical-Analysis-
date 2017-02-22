@@ -1,5 +1,6 @@
 import random
 import math
+import time
 
 ### Primu Exercitiu ###
 
@@ -22,15 +23,21 @@ def add_assoc(x):
     return (x + y) + z == x + (y + z)
 
 
-def mul_assoc(x):
-    precision = find_precision()
-    y = precision
-    z = y
-    return (x * y) * z == x * (y * z)
+def mul_assoc(iterations):
+    not_assoc = 0
+    while iterations != 0:
+        x = random.uniform(0, 1)
+        y = random.uniform(0, 1)
+        z = random.uniform(0, 1)
+        if (x * y) * z != x * (y * z):
+            not_assoc += 1
+        iterations -= 1
+    return not_assoc
 
-
+print("Addition Associativity: ")
 print(add_assoc(1.0))
-
+print("\n Multiplication associativity for a given number of iterations: ")
+print(mul_assoc(100))
 ### Exercitiul 3 ###
 
 c = [0.16666666666666666666666666666667, 0.00833333333333333333333333333333, 1.984126984126984126984126984127e-4,
@@ -98,6 +105,46 @@ def make_error_mean_list():
 
 
 def get_best_poly():
-    return make_error_mean_list().index(min(make_error_mean_list()))
+    return make_error_mean_list().index(min(make_error_mean_list())) + 1
 
+
+def test_time():
+    start1 = time.time()
+    for j in random_numbers:
+        first_poly(j)
+    end1 = time.time()
+    print("First poly time is " + str((end1 - start1)))
+
+    start2 = time.time()
+    for j in random_numbers:
+        second_poly(j)
+    end2 = time.time()
+    print("Second poly time is " + str((end2 - start2)))
+
+    start3 = time.time()
+    for j in random_numbers:
+        third_poly(j)
+    end3 = time.time()
+    print("Third poly time is " + str((end3 - start3)))
+
+    start4 = time.time()
+    for j in random_numbers:
+        fourth_poly(j)
+    end4 = time.time()
+    print("Fourth poly time is " + str((end4 - start4)))
+
+    start5 = time.time()
+    for j in random_numbers:
+        fifth_poly(j)
+    end5 = time.time()
+    print("Fifth poly time is " + str((end5 - start5)))
+
+    start6 = time.time()
+    for j in random_numbers:
+        sixth_poly(j)
+    end6 = time.time()
+    print("Sixth poly time is " + str((end6 - start6)))
+
+print("Best poly is: ")
 print(get_best_poly())
+test_time()
