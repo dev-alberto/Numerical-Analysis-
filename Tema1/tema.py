@@ -7,14 +7,14 @@ import time
 
 def find_precision():
     m = 0
-    while 1 + 10 ** (-m) != 1:
+    while 1.0 + 10 ** (-m) != 1.0:
         m += 1
-    return 10 ** (-m)
+    return 10 ** (-m + 1)
 
+print("Smallest u that satisfies said property is " + str(find_precision()))
 
 ### Exercitiu 2 ###
 
-#Mai e de lucru aici...
 
 def add_assoc(x):
     precision = find_precision()
@@ -38,6 +38,7 @@ print("Addition Associativity: ")
 print(add_assoc(1.0))
 print("\n Multiplication associativity for a given number of iterations: ")
 print(mul_assoc(100))
+
 ### Exercitiul 3 ###
 
 c = [0.16666666666666666666666666666667, 0.00833333333333333333333333333333, 1.984126984126984126984126984127e-4,
@@ -81,7 +82,7 @@ def sin_values(x):
 
 random_numbers = []
 r = 0
-while r < 10000:
+while r < 100000:
     random_numbers.append(random.uniform(-math.pi/2, math.pi/2))
     r += 1
 
@@ -94,7 +95,7 @@ def compute_ith_poly_error(i):
 
 
 def compute_ith_poly_mean_error(i):
-    return sum(compute_ith_poly_error(i))/10000
+    return sum(compute_ith_poly_error(i))/100000
 
 
 def make_error_mean_list():
@@ -148,3 +149,6 @@ def test_time():
 print("Best poly is: ")
 print(get_best_poly())
 test_time()
+
+
+
