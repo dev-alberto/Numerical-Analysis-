@@ -1,0 +1,7 @@
+
+# Ignore backups
+**/*_safe/*
+
+# Ignore compiled
+**/*.pyc
+
