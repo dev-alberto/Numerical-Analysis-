@@ -84,16 +84,21 @@ def mul_assoc_hardcoded_wrapper():
 def polyomial_hardcoded_wrapper():
 	random_numbers = []
 	r = 0
-	while r < 100000:
+	while r < 10000:
 		random_numbers.append(random.uniform(-math.pi/2, math.pi/2))
 		r += 1
+	
+	print("Best poly is: ")
 
-	c = [0.16666666666666666666666666666667, 0.00833333333333333333333333333333, 1.984126984126984126984126984127e-4,
-		 2.7557319223985890652557319223986e-6,
-		 2.5052108385441718775052108385442e-8, 1.6059043836821614599392377170155e-10]
+	# c = [0.16666666666666666666666666666667, 0.00833333333333333333333333333333, 1.984126984126984126984126984127e-4,
+	#      2.7557319223985890652557319223986e-6,
+	#      2.5052108385441718775052108385442e-8, 1.6059043836821614599392377170155e-10]
+	c = [1/math.factorial(3), 1/math.factorial(5), 1/math.factorial(7), 1/math.factorial(9),
+		 1 / math.factorial(11), 1/math.factorial(13)]
 	PA = tm.PolynomialApproximator(c, random_numbers)
 
 	print(PA.get_best_poly())
+
 	print(PA.test_time())
 
 
