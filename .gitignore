@@ -4,4 +4,5 @@
 
 # Ignore compiled
 **/*.pyc
+**/__pycache__/*
 
