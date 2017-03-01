@@ -30,13 +30,3 @@ def mul_assoc_hardcoded_wrapper():
 @app.route('/polynomial')
 def polynomial_hardcoded_wrapper():
     return tm.poly_tests()
-
-
-@app.context_processor
-def utility_processor():
-    return dict(
-        find_precision 	= find_precision_wrapper,
-        add_assoc 		= add_assoc_hardcoded_wrapper,
-        mul_assoc 		= mul_assoc_hardcoded_wrapper,
-        polynomial 		= polynomial_hardcoded_wrapper
-    )
