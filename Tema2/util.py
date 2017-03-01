@@ -2,9 +2,8 @@ from operator import mul
 import functools
 import math
 
-epsilon = 10**(-10)
 
-def check_matrix(A):
+def check_matrix(A, epsilon):
     #check symmetry
     assert A.transpose() == A
     #check pozitive definite
@@ -29,8 +28,8 @@ def decompose(A):
     return A, D
 
 
-def compute_determinant(A):
-    L, D = decompose(A)
+def compute_determinant(D):
+  #  L, D = decompose(A)
     return functools.reduce(mul, D)
 
 
