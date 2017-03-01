@@ -115,49 +115,49 @@ class PolynomialApproximator:
         for j in self.random_numbers:
             self.first_poly_horner(j)
         end1 = time.time()
-        print("Efficient first poly time is " + str((end1 - start1)))
+        # print("Efficient first poly time is " + str((end1 - start1)))
         output += "<br/>Efficient First poly time is " + str((end1 - start1))
 
         start2 = time.time()
         for j in self.random_numbers:
             self.second_poly_horner(j)
         end2 = time.time()
-        print("Efficient second poly time is " + str((end2 - start2)))
+        # print("Efficient second poly time is " + str((end2 - start2)))
         output += "<br/>Efficient Second poly time is " + str((end2 - start2))
 
         start3 = time.time()
         for j in self.random_numbers:
             self.third_poly_horner(j)
         end3 = time.time()
-        print("Efficient third poly time is " + str((end3 - start3)))
+        # print("Efficient third poly time is " + str((end3 - start3)))
         output += "<br/>Efficient Third poly time is " + str((end3 - start3))
 
         start4 = time.time()
         for j in self.random_numbers:
             self.fourth_poly_horner(j)
         end4 = time.time()
-        print("Efficient fourth poly time is " + str((end4 - start4)))
+        # print("Efficient fourth poly time is " + str((end4 - start4)))
         output += "<br/>Efficient Fourth poly time is " + str((end4 - start4))
 
         start5 = time.time()
         for j in self.random_numbers:
             self.fifth_poly_horner(j)
         end5 = time.time()
-        print("Efficient fifth poly time is " + str((end5 - start5)))
+        # print("Efficient fifth poly time is " + str((end5 - start5)))
         output += "<br/>Efficient Fifth poly time is " + str((end5 - start5))
 
         start6 = time.time()
         for j in self.random_numbers:
             self.sixth_poly_horner(j)
         end6 = time.time()
-        print("Efficient Sixth poly time is " + str((end6 - start6)))
+        # print("Efficient Sixth poly time is " + str((end6 - start6)))
         output += "<br/>Efficient Sixth poly time is " + str((end6 - start6))
 
         start = time.time()
         for j in self.random_numbers:
             self.sixth_poly(j)
         end = time.time()
-        print("Normal sixth poly time is " + str((end - start)))
+        # print("Normal sixth poly time is " + str((end - start)))
         output += "<br/>Normal sixth poly time is " + str((end - start))
         return output
 
