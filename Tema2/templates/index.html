@@ -80,12 +80,36 @@
               http://localhost:5000/
             </div>
             <h4><i class="material-icons">bookmark</i> Tema 2 CN</h4>
-              
-            <!-- <h5> Exercise 1 </h5>
-            <p>Smallest u that satisfies said property is: </p>
+            
+            <h5> Exercise 1 </h5>
+            <p>  </p>
+              <p><kbd id="decompose"></kbd></p>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="decompose_handler()"> Calculate </button>
+
+            <h5> Exercise 2 </h5>
+            <p>  </p>
+              <p><kbd id="determinant"></kbd></p>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="determinant_handler()"> Calculate </button>
+
+            <h5> Exercise 3 </h5>
+            <p>  </p>
+              <p><kbd id="solution"></kbd></p>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="solution_handler()"> Calculate </button>
+
+            <h5> Exercise 4 </h5>
+            <p>  </p>
+              <p><kbd id="library-solution"></kbd></p>
+
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="library_solution()"> Calculate </button>
+
+            <h5> Exercise 5 </h5>
+            <p>  </p>
               <p><kbd id="precision"></kbd></p>
 
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="precision_handler()"> Calculate </button> -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="precision_handler()"> Calculate </button>
             
           </div>
         </div>
@@ -95,15 +119,55 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
     <script type="text/javascript">
-        // function precision_handler(){
-        //   $.ajax({
-        //       type: "GET",
-        //       url: "/precision",
-        //       success: function (data) { 
-        //           $("#precision").html(data)
-        //     },
-        //   });                
-        // }
+        function decompose_handler(){
+          $.ajax({
+              type: "GET",
+              url: "/decompose",
+              success: function (data) {
+                  $("#decompose").html(data)
+            },
+          });
+        }
+
+        function determinant_handler(){
+          $.ajax({
+              type: "GET",
+              url: "/determinant",
+              success: function (data) {
+                  $("#determinant").html(data)
+            },
+          });
+        }
+
+        function solution_handler(){
+          $.ajax({
+              type: "GET",
+              url: "/solution",
+              success: function (data) {
+                  $("#solution").html(data)
+            },
+          });
+        }
+
+        function library_solution(){
+          $.ajax({
+              type: "GET",
+              url: "/library-solution",
+              success: function (data) {
+                  $("#library-solution").html(data)
+            },
+          });
+        }
+
+        function precision_handler(){
+          $.ajax({
+              type: "GET",
+              url: "/precision",
+              success: function (data) {
+                  $("#precision").html(data)
+            },
+          });
+        }
         
      </script>
   </body>
