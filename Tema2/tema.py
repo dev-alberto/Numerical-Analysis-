@@ -5,7 +5,8 @@ from sympy import Matrix
 class LDL_Decomposition:
     def __init__(self, A, b, epsilon):
         util.check_matrix(A, epsilon)
-        # we need a copy for A, because our "efficient" way of decomposing the Matrix A actually modifies said matrix, and we still need it
+        # we need a copy for A, because our "efficient" way of decomposing the
+        # Matrix A actually modifies said matrix, and we need the initial matrix for exercise 4
         A_copy = A[:, :]
         self.A = A
         self.b = b
@@ -43,24 +44,19 @@ class LDL_Decomposition:
 
 
 if __name__ == "__main__":
-	CH = LDL_Decomposition(Matrix([[1, 2.5, 3], [2.5, 8.25, 15.5], [3, 15.5, 43]]), [2, 3, 1], 10**(-10))
+    CH = LDL_Decomposition(Matrix([[1, 2.5, 3], [2.5, 8.25, 15.5], [3, 15.5, 43]]), [2, 3, 1], 10 ** (-10))
 
+    ### Exercitiul 1 ###
+    print(CH.decompose_wrapper())
 
-	### Exercitiul 1 ###
-	print(CH.decompose_wrapper())
+    ### Exercitiul 2 ###
+    print(CH.compute_determinant_wrapper())
 
+    ### Exercitiu 3 ###
+    print(CH.solution_wrapper())
 
-	### Exercitiul 2 ###
-	print(CH.compute_determinant_wrapper())
+    ### Exercitiu 4 ###
+    print(CH.library_solution_wrapper())
 
-
-	### Exercitiu 3 ###
-	print(CH.solution_wrapper())
-
-
-	### Exercitiu 4 ###
-	print(CH.library_solution_wrapper())
-
-
-	### Exercitiu 5 ###
-	print(CH.check_precision())
+    ### Exercitiu 5 ###
+    print(CH.check_precision())
