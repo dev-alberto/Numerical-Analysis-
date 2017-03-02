@@ -165,7 +165,7 @@ class PolynomialApproximator:
 def poly_tests():
     random_numbers = []
     r = 0
-    while r < 1000:
+    while r < 100000:
         random_numbers.append(random.uniform(-math.pi / 2, math.pi / 2))
         r += 1
     c = [1 / math.factorial(3), 1 / math.factorial(5), 1 / math.factorial(7), 1 / math.factorial(9),
