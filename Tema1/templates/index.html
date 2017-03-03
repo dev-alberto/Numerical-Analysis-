@@ -95,9 +95,11 @@
 
             <br/>
             <p>Multiplication associativity for a given number of iterations:</p>
+              <p><kbd id="mul-ex"></kbd></p>
               <p><kbd id="mul"></kbd></p>
 
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="mul_assoc_handler()"> Calculate </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="mul_assoc_ex_handler()"> See example </button>
             
             <h5> Exercise 3 </h5>
             <p>Best poly is: </p>
@@ -139,6 +141,15 @@
                     $("#mul").html(data)
               },
             });   
+        }
+        function mul_assoc_ex_handler(){
+          $.ajax({
+                type: "GET",
+                url: "/mul-ex",
+                success: function (data) {
+                    $("#mul-ex").html(data)
+              },
+            });
         }
         function polynomial_handler(){
           $.ajax({

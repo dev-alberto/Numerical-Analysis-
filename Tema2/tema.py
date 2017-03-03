@@ -42,9 +42,13 @@ class LDL_Decomposition:
         else:
             return "Bad Solution"
 
+    def LU_Wrapper(self):
+        return str(util.LU_decomposition(self.A))
 
 if __name__ == "__main__":
     CH = LDL_Decomposition(Matrix([[1, 2.5, 3], [2.5, 8.25, 15.5], [3, 15.5, 43]]), [2, 3, 1], 10 ** (-10))
+
+    #CH = LDL_Decomposition(Matrix([[3, 2, -2], [2, 3, 1], [-2, 1, 3]]), [-3, 2, 7], 10 ** (-10))
 
     ### Exercitiul 1 ###
     print(CH.decompose_wrapper())

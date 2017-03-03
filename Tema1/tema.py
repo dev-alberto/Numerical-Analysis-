@@ -34,6 +34,18 @@ def mul_assoc(iterations):
     return not_assoc
 
 
+def print_not_assoc_mul():
+    flag = True
+    while flag:
+        x = random.uniform(0, 1)
+        y = random.uniform(0, 1)
+        z = random.uniform(0, 1)
+        if (x * y) * z != x * (y * z):
+            flag = False
+            return x, y, z
+
+
+
 ### Exercitiul 3 ###
 
 class PolynomialApproximator:
@@ -82,6 +94,8 @@ class PolynomialApproximator:
     def get_best_poly(self):
         error_mean_list = numpy.array(self.make_error_mean_list())
         sorted_indeces = numpy.argsort(error_mean_list)
+        for i in range(len(sorted_indeces)):
+            sorted_indeces[i] += 1
         return sorted_indeces
 
     def first_poly_horner(self, x):
@@ -180,6 +194,8 @@ def poly_tests():
 if __name__ == "__main__":
     # Exe 1
     print("Smallest u that satisfies said property is " + str(find_precision()))
+
+    print(print_not_assoc_mul())
 
     # Exe 2
     print("Addition Associativity: ")

@@ -27,6 +27,11 @@ def mul_assoc_hardcoded_wrapper():
     return str(tm.mul_assoc(100))
 
 
+@app.route('/mul-ex')
+def mul_ex_assoc_hardcoded_wrapper():
+    return str(tm.print_not_assoc_mul())
+
+
 @app.route('/polynomial')
 def polynomial_hardcoded_wrapper():
     return tm.poly_tests()

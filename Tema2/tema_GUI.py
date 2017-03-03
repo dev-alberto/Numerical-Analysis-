@@ -7,7 +7,7 @@ from flask import render_template
 app = Flask(__name__)
 
 CH = LDL_Decomposition(Matrix([[1, 2.5, 3], [2.5, 8.25, 15.5], [3, 15.5, 43]]), [2, 3, 1], 10 ** (-10))
-
+#CH = LDL_Decomposition(Matrix([[3.0, 2, -2], [2, 3, 1], [-2, 1, 3]]), [1, 0, -1], 10 ** (-10))
 
 @app.route('/')
 def hello_world():
@@ -29,6 +29,11 @@ def determinant():
 @app.route('/solution')
 def solution():
     return str(CH.solution_wrapper())
+
+
+@app.route('/LU')
+def library_decompose():
+    return str(CH.LU_Wrapper())
 
 
 @app.route('/library-solution')
