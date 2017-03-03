@@ -96,8 +96,10 @@
             <h5> Exercise 3 </h5>
             <p>  </p>
               <p><kbd id="solution"></kbd></p>
+              <p><kbd id="LU"></kbd></p>
 
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="solution_handler()"> Calculate </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="library_decompose_handler()"> Show LU </button>
 
             <h5> Exercise 4 </h5>
             <p>  </p>
@@ -145,6 +147,16 @@
               url: "/solution",
               success: function (data) {
                   $("#solution").html(data)
+            },
+          });
+        }
+
+        function library_decompose_handler(){
+          $.ajax({
+              type: "GET",
+              url: "/LU",
+              success: function (data) {
+                  $("#LU").html(data)
             },
           });
         }
