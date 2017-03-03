@@ -1,41 +1,25 @@
-class Parser():
+class Parser:
     def __init__(self, filename):
         self.filename = filename
         f = open(self.filename, 'r')
         self.lines = f.readlines()
 
     def parse_vector(self):
-        v = []
-        for i in range(2, int(self.lines[0]) + 2):
-            v.append(float(self.lines[i].strip('\n')))
-        return v
+        return [float(self.lines[i].strip('\n')) for i in range(2, int(self.lines[0]) + 2)]
 
     def parse_matrix(self):
 
+        #non zero elements
         new_lines = [i for i in self.lines[int(self.lines[0])+3:]]
 
-        intermediate = []
-        for i in new_lines:
-            intermediate.append(i.split(', '))
-
-        # print(intermediate)
-
-        a_ij = []
-        line_vector = []
-        column_vector = []
-
-        d = []
+        #list of lists with elements from file
+        intermediate = [i.split(', ') for i in new_lines]
 
         intermediate.sort(key=lambda x: int(x[1]))
 
-        # print(intermediate)
-
-        for i in intermediate:
-            a_ij.append(float(i[0]))
-            line_vector.append(int(i[1]))
-            if int(i[1]) == int(i[2].strip('\n')):
-                # make d vector
-                d.append(float(i[0]))
+        a_ij = [float(i[0]) for i in intermediate]
+        line_vector = [int(i[1]) for i in intermediate]
+        d = [float(i[0]) for i in intermediate if int(i[1]) == int(i[2].strip('\n'))]
 
         val = []
 
@@ -70,13 +54,9 @@ class Parser():
                 val.remove(i)
 
         val.append(0)
-        print(len(val))
 
         # make col vector
-        col = []
-        for i in intermediate:
-            if float(i[0]) in val:
-                col.append(int(i[2].strip('\n')))
+        col = [int(k[2].strip('\n')) for k in intermediate if float(k[0]) in val]
 
         count1 = 0
         for i in range(len(val)):
@@ -88,3 +68,8 @@ class Parser():
         assert len(col) == len(val) and len(col) == len(new_lines) + 1
 
         return self.lines[0], len(new_lines), d, val, col
+
+#test
+p = Parser("a.txt")
+p.parse_vector()
+p.parse_matrix()
