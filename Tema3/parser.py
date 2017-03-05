@@ -67,9 +67,4 @@ class Parser:
         assert len(d) == int(self.lines[0])
         assert len(col) == len(val) and len(col) == len(new_lines) + 1
 
-        return self.lines[0], len(new_lines), d, val, col
-
-#test
-p = Parser("a.txt")
-p.parse_vector()
-p.parse_matrix()
+        return int(self.lines[0].strip('\n')), len(new_lines), d, val, col
