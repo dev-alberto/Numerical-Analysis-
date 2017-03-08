@@ -30,7 +30,7 @@ def decompose(A):
 
 def compute_determinant(D):
   #  L, D = decompose(A)
-    return functools.reduce(mul, D)
+        return functools.reduce(mul, D)
 
 
 def direct_substitution(L, b):

@@ -15,7 +15,7 @@ class Parser:
         #list of lists with elements from file
         intermediate = [i.split(', ') for i in new_lines]
 
-        intermediate.sort(key=lambda x: int(x[1]))
+        intermediate.sort(key=lambda x: (int(x[1]), int(x[2].strip('\n'))))
 
         a_ij = [float(i[0]) for i in intermediate]
         line_vector = [int(i[1]) for i in intermediate]
