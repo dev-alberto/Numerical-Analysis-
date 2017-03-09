@@ -42,10 +42,29 @@ class Sparse:
         return Sparse([self.n, len(new_val) - 1, new_d, new_val, new_col])
 
     def __mul__(self, other):
+        assert other.n == self.n
+        new_d = []
+        new_val = []
+        new_col = []
         pass
 
     def vector_mul(self, vector):
-        pass
+        assert self.n == len(vector)
+        line = 0
+        i = 0
+        result = []
+        while i < len(self.col)-1:
+            s = 0
+            if (self.col[i] < 0 or i == 0) and self.col[i] != -self.n:
+                s += vector[line] * self.d[line]
+                line += 1
+                i += 1
+            while self.col[i] >= 0:
+                s += self.val[i] * vector[self.col[i]]
+                i += 1
+            result.append(s)
+
+        return result
 
     def __str__(self):
         return "n: " + str(self.n) + "\n NN: " + str(self.NN) + "\n d: " + str(self.d) + "\n val: " + str(self.val) + \
