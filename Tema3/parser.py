@@ -7,6 +7,9 @@ class Parser:
     def parse_vector(self):
         return [float(self.lines[i].strip('\n')) for i in range(2, int(self.lines[0]) + 2)]
 
+    def make_prod_vector(self):
+        return [int(self.lines[0]) - i for i in range(0, int(self.lines[0]))]
+
     def parse_matrix(self):
 
         #non zero elements
