@@ -25,7 +25,7 @@ class Parser:
         d = [float(i[0]) for i in intermediate if int(i[1]) == int(i[2].strip('\n'))]
 
         val = []
-
+        special_line_haha = []
         i = 0
         line = 0
         # make val vector
@@ -43,15 +43,17 @@ class Parser:
                     # print(j)
                     count += 1
                     val.append(a_ij[j])
+                 #   special_line_haha.append(line_vector[j])
                     # print("count is")
                     # print(count)
             # val.append(a_ij[i])
             val.insert(len(val) - count, a_ij[i])
+           # special_line_haha.insert(len(val) - count, line_vector[i])
             i += count + 1
             line += 1
 
         # print(val)
-
+      #  print(special_line_haha)
         for i in val:
             if i in d:
                 val.remove(i)
@@ -71,3 +73,4 @@ class Parser:
         assert len(col) == len(val) and len(col) == len(new_lines) + 1
 
         return int(self.lines[0].strip('\n')), len(new_lines), d, val, col
+
