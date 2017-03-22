@@ -1,235 +1,191 @@
+import itertools
+
+
 class Sparse:
-    def __init__(self, matrix):
+    def __init__(self, matrix, epsilon=10**(-10)):
         self.n = matrix[0]
         self.NN = matrix[1]
         self.d = matrix[2]
-        self.val = matrix[3]
-        self.col = matrix[4]
-        self.zipped = list(zip(self.val, self.col))
-        #print(self.zipped)
-        #self.zipped.sort(key=lambda x: x[1])
+        self.struct = matrix[3]
+        self.epsilon = epsilon
+
+    def __str__(self):
+        return "n: " + str(self.n) + "\n NN: " + str(self.NN) + "\n d: " + str(self.d) + "\n efficientStruct: " + str(self.struct)
+
+    def __mul__(self, other):
+        other.struct = self.prepare_for_multiplication(other.struct, other.n)
+        # print(other.struct)
+        # line0 = Sparse.extract_line_or_column(self.struct, 0)
+        # print(line0)
+        # print(self.mul_line_matrix(line0, 0, other.struct))
+        line = 0
+        new_struct = []
+        d = []
+        while line < self.n:
+            #print("****")
+            #print("Line Is : " + str(line))
+            current_line = self.extract_line_or_column(self.struct, line)
+            res = self.mul_line_matrix(current_line, line, other.struct)
+            new_struct.append(res[0])
+            d.append(res[1])
+            line += 1
+        new_struct = list(itertools.chain.from_iterable(new_struct))
+        new_struct.append((0, -self.n))
+        return Sparse([other.n, len(new_struct) - len(d) - 1, d, new_struct])
 
     def __add__(self, other):
-        assert other.n == self.n
+        new_struct = []
+        i, j = 0, 0
         new_d = []
-        new_val = []
-        new_col = []
+
         for k in range(len(self.d)):
             new_d.append(self.d[k] + other.d[k])
 
-        i = 0
-        j = 0
-        while i < len(self.val) and j < len(self.val):
-            if other.col[j] > self.col[i] >= 0:
-                new_col.append(self.col[i])
-                new_val.append(self.val[i])
+        while i < len(self.struct) and j < len(other.struct):
+            if other.struct[j][1] > self.struct[i][1] >= 0:
+                new_struct.append((self.struct[i][0], self.struct[i][1]))
                 i += 1
-            elif self.col[i] == other.col[j]:
-                new_col.append(self.col[i])
-                new_val.append(self.val[i] + other.val[j])
+            elif self.struct[i][1] > other.struct[j][1] >= 0:
+                new_struct.append((other.struct[j][0], other.struct[j][1]))
+                j += 1
+            elif self.struct[i][1] == other.struct[j][1]:
+                new_struct.append((self.struct[i][0] + other.struct[j][0], self.struct[i][1]))
                 i += 1
                 j += 1
-            elif self.col[i] > other.col[j] >= 0:
-                new_col.append(other.col[j])
-                new_val.append(other.val[j])
+            elif self.struct[i][1] < 0 and other.struct[j][1] >= 0:
+                new_struct.append((other.struct[j][0], other.struct[j][1]))
                 j += 1
-            elif self.col[i] > other.col[j] and other.col[j] < 0:
-                new_col.append(self.col[i])
-                new_val.append(self.val[i])
+            elif other.struct[j][1] < 0 and self.struct[i][1] >= 0:
+                new_struct.append((self.struct[i][0], self.struct[i][1]))
                 i += 1
-            elif other.col[j] > self.col[i] and self.col[i] < 0:
-                new_col.append(other.col[j])
-                new_val.append(other.val[j])
-                j += 1
-        return Sparse([self.n, len(new_val) - 1, new_d, new_val, new_col])
+        return Sparse([self.n, len(new_struct) - len(new_d) - 1, new_d, new_struct])
 
-    def __mul__(self, other):
-        assert other.n == self.n
-        new_d = []
-        new_val = []
-        new_col = []
-        # print("****")
-        # print(self.prepare_matrix(other.val, other.col, self.n))
-        # print("****")
-        other.val, other.col = self.prepare_matrix(other.val, other.col, self.n)
-        # l1 = self.prepare_line_or_column(self.val, self.col, 1, self.d)
-        # c1 = self.prepare_line_or_column(other.val, other.col, 1, other.d)
-        # print(l1)
-        # print(c1)
-        # print(self.interclasare(l1, c1))
+    def vector_mul(self, expected_result):
+        result = []
         line = 0
         while line < self.n:
-            print("****")
-            print("Line Is : " + str(line))
-            column = 0
-            new_val.append(0)
-            new_col.append(-line)
-            #current_line = self.get_line_from_val(self.val, self.col, line)
-            current_line = self.prepare_line_or_column(self.val, self.col, line, self.d)
-            while column < self.n:
-                #current_line = self.get_line_from_val(self.val, self.col, line)
-               # print("Column is: " + str(column))
-                #print(current_line)
-                #current_column = self.get_line_from_val(other.val, other.col, column)
-                current_column = self.prepare_line_or_column(other.val, other.col, column, other.d)
-                value = self.interclasare(current_line, current_column)
-                if value != 0:
-                    new_val.append(value)
-                    new_col.append(column)
-                column += 1
+            current_line = self.extract_line_or_column(self.struct, line)
+            result.append(self.multiply_line_with_prod_vector(current_line, self.n))
             line += 1
-        print(new_val)
-        print(new_col)
 
-    def vector_mul(self, vector):
-        assert self.n == len(vector)
-        line = 0
-        i = 0
-        result = []
-        while i < len(self.col)-1:
-            s = 0
-            if (self.col[i] < 0 or i == 0) and self.col[i] != -self.n:
-                s += vector[line] * self.d[line]
-                line += 1
-                i += 1
-            while self.col[i] >= 0:
-                s += self.val[i] * vector[self.col[i]]
-                i += 1
-            result.append(s)
+        for i in range(len(result)):
+            assert result[i] - expected_result[i] < self.epsilon
 
-        return result
-
-    def __str__(self):
-        return "n: " + str(self.n) + "\n NN: " + str(self.NN) + "\n d: " + str(self.d) + "\n val: " + str(self.val) + \
-               "\n col: " + str(self.col) + '\n zipped: ' + str(self.zipped)
+        #return result
 
     def __eq__(self, other):
-        if other.n != self.n:
-            return False
-        elif other.NN != self.NN:
-            return False
-        elif sorted(other.d) != sorted(self.d):
-            return False
-        elif sorted(other.val) != sorted(self.val):
-            return False
-        elif sorted(other.col) != sorted(self.col):
-            return False
+        for i in range(len(self.struct)):
+            if self.struct[i][0] - other.struct[i][0] > self.epsilon:
+                return False
         return True
 
     @staticmethod
-    def prepare_matrix(val, col, n):
+    def multiply_line_with_prod_vector(line, n):
+        result = 0
+        for i in line:
+            result += i[0] * (n - i[1])
+        return result
+
+
+    @staticmethod
+    def prepare_for_multiplication(struct, n):
         new_val = []
         new_line = []
         line = 0
-       # a_line = [val[i] for i in range(len(val)) if col[i] == line and i != 0]
+        # a_line = [val[i] for i in range(len(val)) if col[i] == line and i != 0]
         while line < n:
             new_val.append(0)
             new_line.append(-line)
-            for i in range(len(val)):
-                if col[i] == line and i != 0:
-                    new_val.append(val[i])
-                    new_line.append(Sparse.get_line(val, i))
+            for i in range(len(struct)):
+                if struct[i][1] == line and i != 0:
+                    new_val.append(struct[i][0])
+                    new_line.append(Sparse.get_line(struct, i))
             line += 1
         new_val.append(0)
         new_line.append(-n)
-        return new_val, new_line
+        return list(zip(new_val, new_line))
 
     @staticmethod
     def get_line(val, stop):
         count = 0
         for i in range(stop):
-            if val[i] == 0:
+            if val[i][0] == 0:
                 count += 1
         return count - 1
 
-    # @staticmethod
-    # def get_line_from_val(val, col, line):
-    #     slice1, slice2 = 0, 0
-    #     #print(col)
-    #     for i in range(len(col)):
-    #         if col[i] == -line:
-    #             slice1 = i
-    #         if col[i] == -line - 1:
-    #             slice2 = i
-    #     if line == 0:
-    #         slice1 = 0
-    #     return list(zip(val[slice1:slice2+1], col[slice1:slice2+1]))
-
     @staticmethod
-    def prepare_line_or_column(val, col, line, d):
+    def extract_line_or_column(struct, line):
         slice1, slice2 = 0, 0
-        # print(col)
-        for i in range(len(col)):
-            if col[i] == -line:
+        for i in range(len(struct)):
+            if struct[i][1] == -line:
                 slice1 = i
-            if col[i] == -line - 1:
+            if struct[i][1] == -line - 1:
                 slice2 = i
         if line == 0:
             slice1 = 0
-        preped = list(zip(val[slice1:slice2+1], col[slice1:slice2+1]))
-        preped.insert(0, (d[-preped[0][1]], -preped[0][1]))
-        preped.sort(key=lambda x: x[1])
-        aux = preped[0]
-        del preped[0]
-        preped.append(aux)
-        if preped[0][1] != 0:
-            del preped[0]
-        else:
-            for i in range(len(preped)):
-                if preped[i] == (0, 0):
-                    del preped[i]
-                    break
-        del preped[-1]
-        return preped
+        return struct[slice1:slice2+1]
 
     @staticmethod
-    def interclasare(line, col):
+    def mul_line_matrix(line, line_nr, struct_):
+        result = []
         i, j = 0, 0
-
-        # line_aux = line[:]
-        #
-        # line_aux.insert(0, (dl[-line[0][1]], -line[0][1]))
-        # col.insert(0, (dc[-col[0][1]], -col[0][1]))
-        #
-        # line_aux.sort(key=lambda x: x[1])
-        # col.sort(key=lambda x: x[1])
-        # aux1, aux2 = line_aux[0], col[0]
-        # del line_aux[0]
-        # del col[0]
-        # line_aux.append(aux1)
-        # col.append(aux2)
-        # if line_aux[0][1] != 0:
-        #     del line_aux[0]
-        #     #del col[0]
-        # else:
-        #     for i in range(len(line_aux)):
-        #         if line_aux[i] == (0, 0):
-        #             del line_aux[i]
-        #             break
-        # if col[0][1] != 0:
-        #     del col[0]
-        # else:
-        #     for i in range(len(col)):
-        #         if col[i] == (0, 0):
-        #             del col[i]
-        #             break
-        # del line_aux[-1]
-        # del col[-1]
-        #print(col)
         val = 0
-        while i < len(line) and j < len(col):
-            # print("**")
-            # print(line[i][1])
-            # print("\n")
-            # print(col[j][1])
-            # print("***")
-            if line[i][1] < col[j][1]:
+        col_nr = 0
+        result.append((0, -line_nr))
+        col_value = 0
+        while i < len(line) and j < len(struct_):
+
+            if line[i][0] == 0 == line[i][1]:
+                #print("(0, 0)")
                 i += 1
-            elif line[i][1] > col[j][1]:
+
+            if line[i][1] == -line_nr and line[i][1] != 0:
+                i += 1
+
+            if struct_[j][0] == struct_[j][1] == 0:
+                #print("(0, 0)")
                 j += 1
-            elif line[i][1] == col[j][1]:
-                val += line[i][0] * col[j][0]
+
+            if line[i][1] < 0 and struct_[j][1] < 0:
+                #print("Pivotez")
+                #print("i, j sunt ")
+                #print(i, j)
+                j += 1
+                i = i - len(line) + 2
+                #print("new i")
+                #print(i)
+                #print("valoarea e")
+                #print(val)
+                if val != 0:
+                    result.append((val, col_nr))
+                if col_nr == line_nr:
+                    col_value = val
+                col_nr += 1
+                if j == len(struct_):
+                    break
+                val = 0
+
+            if struct_[j][1] > line[i][1] >= 0:
+                #print("shiftez linia")
+                i += 1
+
+            if line[i][1] > struct_[j][1] >= 0:
+                #print("shiftez coloana")
+                j += 1
+
+            if struct_[j][1] < 0 <= line[i][1]:
+                #print("astept sa se termine linia")
+                i += 1
+
+            if line[i][1] < 0 <= struct_[j][1]:
+                #print("astept sa se termine coloana ")
+                j += 1
+
+            if struct_[j][1] == line[i][1] and struct_[j][0] != 0 and line[i][0] != 0:
+                #print("in sfarsit inmultesc ceva")
+                val += struct_[j][0] * line[i][0]
                 i += 1
                 j += 1
-        #print(val)
-        return val
+
+        return result, col_value
+
