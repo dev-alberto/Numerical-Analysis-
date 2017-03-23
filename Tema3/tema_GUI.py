@@ -1,37 +1,13 @@
 from hw3_test import Test
 from hw4_solver import Gauss
 
-import sys
-#from solver import ListStream
+#from util import ListStream
 
 from flask import Flask
 from flask import render_template
 
 app = Flask(__name__)
 
-
-# class ListStream:
-#     def __init__(self):
-#         self.data = []
-#     def write(self, s):
-#         #print(s)
-#         self.data.append(s)
-
-'''
-sys.stdout = x = ListStream()
-f = open('_dmpFile', 'w')
-
-gauss = Gauss("sisteme/m_rar_2017_1.txt")
-print(gauss.size)
-# gauss.formula3()
-gauss.seidel()
-
-sys.stdout = sys.__stdout__
-# print(x.data)
-f.write( ''.join(x.data) )
-
-f.close()
-'''
 
 
 @app.route('/')
@@ -60,38 +36,33 @@ def test_matrix_product_wrapper():
 	
 
 # ##### Homework 4 routes #####
+@app.route('/hw4/system/1')
+def system_1_wrapper():
+	gauss1 = Gauss("sisteme/m_rar_2017_1.txt")
+	return str(gauss1.check_solution())
 
-'''
-print("First system, checking solution")
-gauss1 = Gauss("sisteme/m_rar_2017_1.txt")
-gauss1.check_solution()
+@app.route('/hw4/system/2')
+def system_2_wrapper():
+	gauss2 = Gauss("sisteme/m_rar_2017_2.txt")
+	return str(gauss2.check_solution())
 
-print("Second system, checking solution")
-gauss2 = Gauss("sisteme/m_rar_2017_2.txt")
-gauss2.check_solution()
+@app.route('/hw4/system/3')
+def system_3_wrapper():
+	gauss3 = Gauss("sisteme/m_rar_2017_3.txt")
+	return str(gauss3.check_solution())
 
-print("Third system, checking solution")
-gauss3 = Gauss("sisteme/m_rar_2017_3.txt")
-gauss3.check_solution()
 
-print("Fourth system, checking solution")
-gauss4 = Gauss("sisteme/m_rar_2017_4.txt")
-print(gauss4.check_solution())
-'''
+@app.route('/hw4/system/4')
+def system_4_wrapper():
+	gauss4 = Gauss("sisteme/m_rar_2017_4.txt")
+	return str(gauss4.check_solution())
 
 @app.route('/result')
 def smth_wrapper():
-	#tema 3 
-	#test.py
-
-	#tema 4
 	# sys.stdout = x = ListStream()
 	# f = open('_dmpFile', 'w+')
 
-	# gauss = Gauss("sisteme/m_rar_2017_1.txt")
-	# print(gauss.size)
-	# # gauss.formula3()
-	# gauss.seidel()
+	#print() # ...
 
 	# sys.stdout = sys.__stdout__
 	# f.write( ''.join(x.data) )
@@ -101,3 +72,4 @@ def smth_wrapper():
 
 	#return str(read_output)
 	return str('Not implemented')
+

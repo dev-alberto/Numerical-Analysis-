@@ -79,7 +79,7 @@
             <div class="demo-crumbs mdl-color-text--grey-500">
               http://localhost:5000/
             </div>
-            <h3><i class="material-icons">bookmark</i> Tema 3 &amp; 4 CN</h3>
+            <h3> Tema 3 &amp; 4 CN</h3>
             
             <h4><i class="material-icons">bookmark</i> Tema 3 CN</h4>
             <p>Commencing tests: </p>
@@ -106,8 +106,38 @@
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="matrix_product_handler()"> Calculate </button>
 
 
+            <!-- Tema 4 CN -->
             <h4><i class="material-icons">bookmark</i> Tema 4 CN</h4>
             <p>Commencing tests: </p>
+
+            <h5> System 1 </h5>
+            <p id="pre-sys1">  </p>
+              <p><kbd id="sys1"></kbd></p>
+
+             <!-- <p id="post-sys1">  </p> -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="sys1_cached_handler()"> See cached response </button>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys1_handler()"> Re-calculate </button>
+
+            <h5> System 2 </h5>
+            <p id="pre-sys2">  </p>
+              <p><kbd id="sys2"></kbd></p>
+
+             <!-- <p id="post-sys2">  </p> -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys2_handler()"> Calculate </button>
+
+            <h5> System 3 </h5>
+            <p id="pre-sys3">  </p>
+              <p><kbd id="sys3"></kbd></p>
+
+             <!-- <p id="post-sys3">  </p> -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys3_handler()"> Calculate </button>
+
+            <h5> System 4 </h5>
+            <p id="pre-sys4">  </p>
+              <p><kbd id="sys4"></kbd></p>
+
+             <!-- <p id="post-sys4">  </p> -->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys4_handler()"> Calculate </button>
 
 
           </div>
@@ -117,6 +147,8 @@
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+
+    <!-- Homework 3 handlers -->
     <script type="text/javascript">
         function sum_handler(){
           $("#pre-sum").html("Starting A + B test: ");
@@ -159,8 +191,66 @@
             },
           });
         }
-        
-        
      </script>
+
+    <!-- Homework 4 handlers -->
+    <script type="text/javascript">
+        function sys1_cached_handler(){
+          $("#pre-sys1").html("Display cached solution from file ...");
+        }
+
+        function sys1_handler(){
+          $("#pre-sys1").html("First system, checking solution");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw4/system/1",
+              success: function (data) {
+                  $("#sys1").html(data);
+                  //$("#post-sys1").html("success");
+            },
+          });
+        }
+
+        function sys2_handler(){
+          $("#pre-sys2").html("Second system, checking solution");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw4/system/2",
+              success: function (data) {
+                  $("#sys2").html(data);
+                  //$("#post-sys2").html("success");
+            },
+          });
+        }
+
+        function sys3_handler(){
+          $("#pre-sys3").html("Third system, checking solution");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw4/system/3",
+              success: function (data) {
+                  $("#sys3").html(data);
+                  //$("#post-sys3").html("success");
+            },
+          });
+        }
+
+        function sys4_handler(){
+          $("#pre-sys4").html("Fourth system, checking solution");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw4/system/4",
+              success: function (data) {
+                  $("#sys4").html(data);
+                  //$("#post-sys4").html("success");
+            },
+          });
+        }
+
+    </script>
   </body>
 </html>
