@@ -1,10 +1,10 @@
 from parser import Parser
-from Sparse import Sparse
 import math
+from decimal import Decimal
 
 
 class Gauss:
-    def __init__(self, filename, epsilon=10**(-10)):
+    def __init__(self, filename, epsilon=10**(-8)):
         parser = Parser(filename)
         details = parser.parse_matrix()
         self.b = parser.parse_vector()
@@ -14,22 +14,6 @@ class Gauss:
         self.epsilon = epsilon
 
     def formula3(self, x_p):
-        #print(Sparse.extract_line_or_column(self.struct, 3000))
-        x = []
-        line = 0
-        while line < self.size:
-            #print("Line is")
-            print(line)
-            current_line = Sparse.extract_line_or_column(self.struct, line)
-            #_j = [j for j in range(len(current_line)) if (line > current_line[j][1] >= 0)]
-            #print(_j)
-            #j_ = [j for j in range(len(current_line)) if current_line[j][1] > line]
-            #print(j_)
-            x.append((self.b[line] - sum([current_line[j][0] * x[j] for j in range(len(current_line)) if (line > current_line[j][1] >= 0)]) - sum([current_line[j][0] * x_p[j] for j in range(len(current_line)) if current_line[j][1] > line])) / self.d[line])
-            line += 1
-        return x
-
-    def revised_formula3(self, x_p):
         x = [0 for i in range(self.size)]
         line = 0
         i = 0
@@ -53,33 +37,73 @@ class Gauss:
 
     def seidel(self):
         x_p = [0 for i in range(self.size)]
-        #x_c = [0 for i in range(self.size)]
         delta = 1
         k = 0
         while k < 10000:
-            print("****")
-            print("k is")
-            print(k)
-            print("delta is")
-            print(delta)
-            #x_c = self.formula3(x_p)
-            x_c = self.revised_formula3(x_p)
+            # print("****")
+            # print("k is")
+            # print(k)
+            # print("delta is")
+            # print(delta)
+            x_c = self.formula3(x_p)
             delta = self.norm(x_c, x_p)
             x_p = x_c
             k += 1
             if delta <= self.epsilon:
-                print(x_c)
                 break
-        #return x_c
+        if k < 10000:
+            print("Nr of iterations used until convergence:  ")
+            print(k)
+            return x_p
+        else:
+            return False
+
+    def check_solution(self):
+        x_GS = self.seidel()
+        if x_GS:
+            A_times_x_GS = self.multiply_solution_with_matrix(x_GS)
+            diff = []
+            for i in range(len(x_GS)):
+                diff.append(A_times_x_GS[i] - self.b[i])
+            assert max(diff) < self.epsilon
+            print("Solution OK")
+        else:
+            print("No solution was found")
+
+    def multiply_solution_with_matrix(self, solution):
+        i = 1
+        val = 0
+        result = []
+        while i < len(self.struct):
+            if self.struct[i][1] < 0:
+                i += 1
+                result.append(val)
+                val = 0
+            else:
+                val += self.struct[i][0] * solution[self.struct[i][1]]
+                i += 1
+        return result
 
     @staticmethod
     def norm(x_c, x_p):
-        dist = [(a - b) ** 2 for a, b in zip(x_c, x_p)]
+        dist = [Decimal((a - b)) ** 2 for a, b in zip(x_c, x_p)]
         dist = math.sqrt(sum(dist))
         return dist
 
 if __name__ == '__main__':
-    gauss = Gauss("sisteme/m_rar_2017_1.txt")
-    print(gauss.size)
-   # gauss.formula3()
-    gauss.seidel()
+
+    print("First system, checking solution")
+    gauss1 = Gauss("sisteme/m_rar_2017_1.txt")
+    gauss1.check_solution()
+
+    print("Second system, checking solution")
+    gauss2 = Gauss("sisteme/m_rar_2017_2.txt")
+    gauss2.check_solution()
+
+    print("Third system, checking solution")
+    gauss3 = Gauss("sisteme/m_rar_2017_3.txt")
+    gauss3.check_solution()
+
+    print("Fourth system, checking solution")
+    gauss4 = Gauss("sisteme/m_rar_2017_4.txt")
+    print(gauss4.check_solution())

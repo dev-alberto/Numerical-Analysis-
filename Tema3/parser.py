@@ -8,6 +8,7 @@ class Parser:
         return [float(self.lines[i].strip('\n')) for i in range(2, int(self.lines[0]) + 2)]
 
     def parse_matrix(self):
+
         new_lines = [i for i in self.lines[int(self.lines[0])+3:]]
 
         intermediate = [i.split(', ') for i in new_lines]

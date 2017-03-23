@@ -4,20 +4,6 @@ from Sparse import Sparse
 from parser import Parser
 
 
-# f = open("a.txt", 'r')
-# lines = f.readlines()
-# new_lines = [i for i in lines[int(lines[0])+3:]]
-# intermediate = [i.split(', ') for i in new_lines]
-# intermediate.sort(key=lambda x: int(x[1]))
-#
-# print(intermediate[1][0])
-#
-# for i in range(len(intermediate)):
-#     for j in range(i+1, len(intermediate)):
-#         if (int(intermediate[i][1]) == int(intermediate[j][1])) and (int(intermediate[i][2].strip('\n')) == int(intermediate[j][2].strip('\n'))):
-#             print("nuuuu")
-
-
 class Test:
     def __init__(self):
         self.parser_a = Parser("matrici_tema3/a.txt")
@@ -45,6 +31,7 @@ class Test:
         assert self.matrix_a * self.matrix_b == self.matrix_prod
 
 if __name__ == '__main__':
+
     start = time.time()
     print("Commencing tests: ")
     test = Test()
