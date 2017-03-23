@@ -79,14 +79,37 @@
             <div class="demo-crumbs mdl-color-text--grey-500">
               http://localhost:5000/
             </div>
-            <h4><i class="material-icons">bookmark</i> Tema 3 &amp; 4 CN</h4>
+            <h3><i class="material-icons">bookmark</i> Tema 3 &amp; 4 CN</h3>
             
-            <h5> Exercise ?? </h5>
-            <p>  </p>
-              <p><kbd id="result"></kbd></p>
+            <h4><i class="material-icons">bookmark</i> Tema 3 CN</h4>
+            <p>Commencing tests: </p>
 
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="result_handler()"> Calculate </button>
+            <h5> Sum </h5>
+            <p id="pre-sum">  </p>
+              <p><kbd id="sum"></kbd></p>
+
+             <p id="post-sum">  </p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sum_handler()"> Calculate </button>
             
+            <h5> Vector Product </h5>
+            <p id="pre-vprod">  </p>
+              <p><kbd id="vprod"></kbd></p>
+
+             <p id="post-vprod">  </p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="vector_product_handler()"> Calculate </button>
+
+            <h5> Matrix Product </h5>
+            <p id="pre-mprod">  </p>
+              <p><kbd id="mprod"></kbd></p>
+
+             <p id="post-mprod">  </p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="matrix_product_handler()"> Calculate </button>
+
+
+            <h4><i class="material-icons">bookmark</i> Tema 4 CN</h4>
+            <p>Commencing tests: </p>
+
+
           </div>
         </div>
       </main>
@@ -95,12 +118,44 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
     <script type="text/javascript">
-        function result_handler(){
+        function sum_handler(){
+          $("#pre-sum").html("Starting A + B test: ");
+
           $.ajax({
               type: "GET",
-              url: "/result",
+              url: "/hw3/sum",
               success: function (data) {
-                  $("#result").html(data)
+                  $("#sum").html(data);
+
+                  $("#post-sum").html("A+B success");
+            },
+          });
+        }
+
+        function vector_product_handler(){
+          $("#pre-vprod").html("Starting A*x, B*x, (A+B)*x, (A*B)*x tests");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw3/vprod",
+              success: function (data) {
+                  $("#vprod").html(data);
+
+                  $("#post-vprod").html("Vector prods success");
+            },
+          });
+        }
+
+        function matrix_product_handler(){
+          $("#pre-mprod").html("Starting A*B test");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw3/mprod",
+              success: function (data) {
+                  $("#mprod").html(data);
+
+                  $("#post-mprod").html("Matrix product was successful");
             },
           });
         }
