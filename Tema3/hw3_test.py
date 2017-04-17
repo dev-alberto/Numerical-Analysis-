@@ -19,6 +19,7 @@ class Test:
 
     def test_matrix_sum(self):
         assert (self.matrix_a + self.matrix_b) == self.matrix_sum
+        return "Sum ok"
 
     def test_vector_product(self):
 
@@ -27,8 +28,11 @@ class Test:
         self.matrix_sum.vector_mul(self.parser_sum.parse_vector())
         self.matrix_prod.vector_mul(self.parser_prod.parse_vector())
 
+        return "Vector Products Ok"
+
     def test_matrix_product(self):
         assert self.matrix_a * self.matrix_b == self.matrix_prod
+        return "Matrix Multiplication Ok"
 
 if __name__ == '__main__':
 
