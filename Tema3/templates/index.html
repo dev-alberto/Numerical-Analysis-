@@ -115,8 +115,8 @@
               <p><kbd id="sys1"></kbd></p>
 
              <!-- <p id="post-sys1">  </p> -->
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" onclick="sys1_cached_handler()"> See cached response </button>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys1_handler()"> Re-calculate </button>
+            <!--<button class="mdl-button mdl-js-button mdl-button&#45;&#45;raised mdl-js-ripple-effect mdl-button&#45;&#45;colored" onclick="sys1_cached_handler()"> See cached response </button>-->
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="sys1_handler()"> Calculate </button>
 
             <h5> System 2 </h5>
             <p id="pre-sys2">  </p>
@@ -159,7 +159,7 @@
               success: function (data) {
                   $("#sum").html(data);
 
-                  $("#post-sum").html("A+B success");
+                  //$("#post-sum").html("A+B success");
             },
           });
         }
@@ -173,7 +173,7 @@
               success: function (data) {
                   $("#vprod").html(data);
 
-                  $("#post-vprod").html("Vector prods success");
+                  //$("#post-vprod").html("Vector prods success");
             },
           });
         }
@@ -187,7 +187,7 @@
               success: function (data) {
                   $("#mprod").html(data);
 
-                  $("#post-mprod").html("Matrix product was successful");
+                 // $("#post-mprod").html("Matrix product was successful");
             },
           });
         }

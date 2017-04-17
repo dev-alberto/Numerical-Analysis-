@@ -25,6 +25,7 @@ class Sparse:
             #print("****")
             #print("Line Is : " + str(line))
             current_line = self.extract_line_or_column(self.struct, line)
+            assert len(current_line) < 13
             res = self.mul_line_matrix(current_line, line, other.struct)
             new_struct.append(res[0])
             d.append(res[1])
