@@ -4,7 +4,7 @@ from decimal import Decimal
 
 
 class Gauss:
-    def __init__(self, filename, epsilon=10**(-8)):
+    def __init__(self, filename, epsilon=10**(-9)):
         parser = Parser(filename)
         details = parser.parse_matrix()
         self.b = parser.parse_vector()
