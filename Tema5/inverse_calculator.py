@@ -43,8 +43,8 @@ class Inverse:
             #print(V1)
             delta = self.norm1(V1 - V0)
             k += 1
-        print(k)
-        return V1
+        #print(k)
+        return str(k) + '<br>' + str(V1) 
 
 
 test = Inverse(3, [[1.0, 2.0, 3.0], [0, 4, 5], [1, 0, 6]])
