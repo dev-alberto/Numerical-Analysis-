@@ -83,11 +83,30 @@
             <h4><i class="material-icons">bookmark</i> Tema 5 CN</h4>
 
             <h5> Calculating Inverse </h5>
-            <p id="pre-sum">  </p>
+
+            <!--  Inverse(3, [[1.0, 2.0, 3.0], [0, 4, 5], [1, 0, 6]])
+             size
+             matrix -->
+
+             <!-- method="post" action=" url_for('/hw5/inverse') }} -->
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="size" name="size" value="3"/>
+                <label class="mdl-textfield__label" for="size">Size</label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="matrix" name="matrix" value="[[1.0, 2.0, 3.0], [0.0, 4.0, 5.0], [1.0, 0.0, 6.0]]"/>
+                <label class="mdl-textfield__label" for="matrix">Matrix</label>
+              </div>
+              <br/>
+              <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="inverse_handler()"> Calculate </button>
+
+              <p id="pre-sum">  </p>
               <p><kbd id="inverse"></kbd></p>
 
              <p id="post-sum">  </p>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="inverse_handler()"> Calculate </button>
+           
+
+            <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="inverse_handler()"> Calculate </button> -->
 
           </div>
         </div>
@@ -102,13 +121,22 @@
         function inverse_handler(){
           $("#pre-sum").html("Computing inverse: ");
 
+          var payload = {
+            "size": $("#size").val(), 
+            "matrix": $("#matrix").val()
+          };
+
+          console.log(payload);
+
           $.ajax({
-              type: "GET",
+              method: "POST",
+              contentType: "application/json",
               url: "/hw5/inverse",
+              data: JSON.stringify(payload),
               success: function (data) {
                   $("#inverse").html(data);
                   //$("#post-sum").html("A+B success");
-            },
+              }
           });
         }
 
