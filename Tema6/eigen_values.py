@@ -61,6 +61,16 @@ class Solver:
         print("Norma: ")
         print(np.linalg.norm(np.dot(np.dot(U, S), np.transpose(V)), ord=np.inf))
 
+        temp_output = str(S) + "<br/>" + \
+                        "Valori singulare" + "<br/>" + \
+                        str(valori_sing) + "<br/>" + \
+                        "Rang " + str(rang) + "<br/>" + \
+                        "Numar de conditionare: " + "<br/>" + \
+                        str(max(valori_sing) / min(valori_sing)) + "<br/>" + \
+                        "Norma: " + "<br/>" + \
+                        str(np.linalg.norm(np.dot(np.dot(U, S), np.transpose(V)), ord=np.inf)) + "<br/>"
+        return temp_output
+
     def generate_random_v0(self):
         v0 = [random() for i in range(self.n)]
         v0 = self.mul_vector_with_scalar(1 / self.v_norm(v0), v0)

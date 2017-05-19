@@ -61,6 +61,18 @@
       .demo-footer .mdl-mini-footer--link-list a {
         font-size: 13px;
       }
+
+      .overflow-container{
+        max-height: 200px;
+        overflow-y: scroll;
+      }
+
+      .kbd-container { 
+        padding: 10px;
+        background-color: #000;
+        border-radius: 5px;
+        color: #FFF;
+      }
     </style>
   </head>
   <body>
@@ -85,7 +97,7 @@
             <h5> Largest eigen </h5>
 
             <p id="pre-eigen">  </p>
-              <p><kbd id="eigen"></kbd></p>
+              <p class="kbd-container"><kbd id="eigen"></kbd></p>
 
              <p id="post-eigen">  </p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="largest_eigen_handler()"> Calculate </button>
@@ -94,13 +106,13 @@
             <h5> Random v0 </h5>
 
             <p id="pre-random-v0">  </p>
-              <p><kbd id="random-v0"></kbd></p>
+              <p class="kbd-container overflow-container"><kbd id="random-v0"></kbd></p>
 
              <p id="post-random-v0">  </p>
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="random_v0_handler()"> Calculate </button>
 
 
-            <h5> Multiplying col and line </h5>
+           <!--  <h5> Multiplying col and line </h5>
 
               <div class="mdl-textfield mdl-js-textfield">
                 <input class="mdl-textfield__input" type="text" id="col_vector" name="col_vector" value="[1, 2, 3]"/>
@@ -114,12 +126,12 @@
               <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="multiply_column_line_handler()"> Calculate </button>
 
               <p id="pre-col-line">  </p>
-              <p><kbd id="col-line"></kbd></p>
+              <p class="kbd-container"><kbd id="col-line"></kbd></p>
 
-             <p id="post-col-line">  </p>
+             <p id="post-col-line">  </p> -->
            
 
-           <h5> Multiplying matrix and vector </h5>
+           <!-- <h5> Multiplying matrix and vector </h5>
 
               <div class="mdl-textfield mdl-js-textfield">
                 <input class="mdl-textfield__input" type="text" id="matrix" name="matrix" value="[[1, 0, 1], [2, 0, 2], [3, 0, 3]]"/>
@@ -133,11 +145,37 @@
               <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="multiply_matrix_vector_handler()"> Calculate </button>
 
               <p id="pre-matr-vector">  </p>
-              <p><kbd id="matr-vector"></kbd></p>
+              <p class="kbd-container"><kbd id="matr-vector"></kbd></p>
 
-             <p id="post-matr-vector">  </p>
+             <p id="post-matr-vector">  </p> -->
 
-            <!-- <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="inverse_handler()"> Calculate </button> -->
+
+            <h5> Generate SVD matrix </h5>
+
+            <p id="pre-svd-matrix">  </p>
+              <p class="kbd-container"><kbd id="svd-matrix"></kbd></p>
+
+             <p id="post-svd-matrix">  </p>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="generate_svd_matrix_handler()"> Calculate </button>
+
+
+            <h5> Find SVD eigenvalues </h5>
+
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="a" name="a" value="10"/>
+                <label class="mdl-textfield__label" for="a">A </label>
+              </div>
+              <div class="mdl-textfield mdl-js-textfield">
+                <input class="mdl-textfield__input" type="text" id="b" name="b" value="9"/>
+                <label class="mdl-textfield__label" for="b">B </label>
+              </div>
+              <br/>
+              <button type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="find_svd_eigen_values_handler()"> Calculate </button>
+
+              <p id="pre-svd-eigen">  </p>
+              <p class="kbd-container"><kbd id="svd-eigen"></kbd></p>
+
+             <p id="post-svd-eigen">  </p>
 
           </div>
         </div>
@@ -216,6 +254,41 @@
               success: function (data) {
                   $("#matr-vector").html(data);
                   $("#post-matr-vector").html("Multiplied matrix with vector");
+              }
+          });
+        }
+
+        function generate_svd_matrix_handler(){
+          $("#pre-svd-matrix").html("Computing svd matrix: ");
+
+          $.ajax({
+              type: "GET",
+              url: "/hw6/svd_matrix",
+              success: function (data) {
+                  $("#svd-matrix").html(data);
+                  $("#post-svd-matrix").html("Matrix calculated !");
+            },
+          });
+        }
+
+        function find_svd_eigen_values_handler(){
+          $("#pre-svd-eigen").html("Finding svd eigenvalues: ");
+
+          var payload = {
+            "a": $("#a").val(), 
+            "b": $("#b").val()
+          };
+
+          console.log(payload);
+
+          $.ajax({
+              method: "POST",
+              contentType: "application/json",
+              url: "/hw6/svd_eigen",
+              data: JSON.stringify(payload),
+              success: function (data) {
+                  $("#svd-eigen").html(data);
+                  $("#post-svd-eigen").html("Eigenvalues found !");
               }
           });
         }
