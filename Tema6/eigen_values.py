@@ -1,4 +1,4 @@
-from parser import Parser
+from cn_parser import Parser
 from decimal import Decimal
 import math
 from random import random, randint, uniform
