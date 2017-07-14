@@ -1,4 +1,4 @@
-from parser import Parser
+from cn_parser import Parser
 import math
 from decimal import Decimal
 
