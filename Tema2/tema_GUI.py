@@ -1,4 +1,5 @@
-from tema import LDL_Decomposition
+#from tema import LDL_Decomposition
+from .tema import LDL_Decomposition
 from sympy import Matrix
 
 from flask import Flask

@@ -1,6 +1,7 @@
 
 # Ignore backups
 **/*_safe/*
+safe_*
 
 # Ignore compiled
 **/*.pyc

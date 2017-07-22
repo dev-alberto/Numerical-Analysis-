@@ -1,4 +1,5 @@
-import tema as tm
+#import tema as tm
+from . import tema as tm
 
 from flask import Flask
 from flask import render_template
