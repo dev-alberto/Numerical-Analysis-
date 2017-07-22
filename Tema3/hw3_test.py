@@ -1,7 +1,9 @@
 import time
 from datetime import timedelta
-from Sparse import Sparse
-from cn_parser import Parser
+# from Sparse import Sparse
+# from cn_parser import Parser
+from .Sparse import Sparse
+from .cn_parser import Parser
 
 
 class Test:

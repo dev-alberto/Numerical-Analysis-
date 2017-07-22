@@ -1,4 +1,5 @@
-from inverse_calculator import Inverse
+# from inverse_calculator import Inverse
+from .inverse_calculator import Inverse
 
 # from util import ListStream
 

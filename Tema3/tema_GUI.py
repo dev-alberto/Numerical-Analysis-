@@ -1,5 +1,7 @@
-from hw3_test import Test
-from hw4_solver import Gauss
+# from hw3_test import Test
+# from hw4_solver import Gauss
+from .hw3_test import Test
+from .hw4_solver import Gauss
 
 # from util import ListStream
 

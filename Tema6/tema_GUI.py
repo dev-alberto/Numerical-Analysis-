@@ -1,4 +1,5 @@
-from eigen_values import Solver
+# from eigen_values import Solver
+from .eigen_values import Solver
 
 # from util import ListStream
 

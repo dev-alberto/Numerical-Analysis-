@@ -1,4 +1,5 @@
-import util
+# import util
+from . import util
 from sympy import Matrix
 
 
