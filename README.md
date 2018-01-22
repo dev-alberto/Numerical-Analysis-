@@ -10,3 +10,4 @@ To run the app, run `make.bat` if you're on Windows, `make` otherwise (equivalen
   + same for files loaded from txt
   + patched - modules loaded in subprojects are now loaded relative
 + make an index for `front.py` (or make an `SPA` with ng1)
++ `reference.md` - rewrite for future use
